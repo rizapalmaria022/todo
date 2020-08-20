@@ -13,8 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::get('/', 'TodoController@index');
+Route::get('/list', function(){
+    return view('todo');
+});
+Route::get('/load', 'TodoController@index');
 
 Route::post('/add', 'TodoController@store'); // add or insert todo
 

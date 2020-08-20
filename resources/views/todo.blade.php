@@ -1,17 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>Todo List</title>
-
-  <!-- Plugins Header -->
-   <!-- Bootstrap -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('../node_modules/bootstrap/dist/css/bootstrap.min.css') }}">
-</head>
-
-<body>
+@extends('template.app')
+@section('content')
   <!-- Container -->
   <div class="container">
     <!-- card todo_add -->
@@ -73,17 +61,14 @@
      <!-- end card todo_list -->
   </div>
   <!-- End Container -->
+@endsection
 
-  <!-- Plugins Footer-->
-    <!-- Bootstrap -->
-    <script src="{{ asset('../node_modules/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-    <!-- Jquery -->
-    <script src="{{ asset('../node_modules/jquery/dist/jquery.min.js') }}"></script>
-
-
-  <!-- Assets Footer-->  
+@section('resource')
+    <!-- Base url use in ajax request -->
+    <script>
+    const BASE_URL = "{{URL::to('/')}}";
+    </script>
+   <!-- Assets Footer-->  
     <!-- todo-js -->
     <script src="{{ asset('scripts/todo_list.js')}}"></script>
-
-</body>
-</html>
+@endsection

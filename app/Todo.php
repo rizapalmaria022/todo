@@ -11,8 +11,9 @@ class Todo extends Model
 
     public function get_all_data()
     {
-        return Todo::whereNotNull('deleted_at')
+        return Todo::whereNull('deleted_at')
                         ->get();
+                        // return Todo::get();
         /*only with deleted_at value null will show */
     }
     public function insert_data($data)
