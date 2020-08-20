@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Todo;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+
+
+
 
 class TodoController extends Controller
 {
@@ -14,7 +19,8 @@ class TodoController extends Controller
      */
     public function index()
     {
-        //
+    //    return view('todo');
+        // return csrf_token();
     }
 
     /**
@@ -33,9 +39,20 @@ class TodoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,Todo $todo)
     {
-        //
+        $validatedData = Validator::make($request->all(), [
+            'title' => 'required',
+            'description' => 'required',
+        ]);
+
+        if ($validatedData->fails()) {
+            $data = $validatedData->errors();
+        }else
+        {
+            $data =  $todo->insert_data($request->all());
+        }
+        return response()->json($data);
     }
 
     /**
@@ -46,7 +63,7 @@ class TodoController extends Controller
      */
     public function show(Todo $todo)
     {
-        //
+        
     }
 
     /**
