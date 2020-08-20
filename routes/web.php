@@ -16,11 +16,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/list', function(){
     return view('todo');
 });
-Route::get('/load', 'TodoController@index');
+Route::get('/load', 'TodoController@index'); // load all data todo 
 
 Route::post('/add', 'TodoController@store'); // add or insert todo
 
-Route::get('/show/{id}', 'TodoController@show'); // show specific data 
+Route::get('/show/{id}', 'TodoController@show'); // show specific data todo
 
-Route::patch('/update/{id}', 'TodoController@update'); // update specific data
+Route::patch('/update/{id}', 'TodoController@update'); // update specific data todo
+
+Route::patch('/update_check/{id}', 'TodoController@updatecheck'); // update specific data todo
+
+Route::get('/delete/{id}', 'TodoController@destroy'); // delete specific data todo
 

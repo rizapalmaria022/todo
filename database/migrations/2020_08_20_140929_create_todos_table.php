@@ -17,6 +17,7 @@ class CreateTodosTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
+            $table->integer('status')->default(0);
             $table->timestamps();
             $table->softDeletes('deleted_at', 0);
         });
@@ -29,6 +30,10 @@ class CreateTodosTable extends Migration
      */
     public function down()
     {
+        Schema::table('todos', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
         Schema::dropIfExists('todos');
+       
     }
 }

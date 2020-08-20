@@ -14,18 +14,23 @@
         <!-- form -->
         <form class="todo_frm">
           @csrf
+         <!-- hidden type id of todo-->
+          <input type="hidden" class="form-control" id="id" name="id" required> 
+           <!-- hidden type status of todo-->
+           <input type="hidden" class="form-control" id="status" name="status" value = 0 required> 
           <!-- form-group input id=title -->
           <div class="form-group">
             <label for="title">Title:</label>
-            <input type="text" class="form-control" id="title">
+            <input type="text" class="form-control" id="title" name="title" required>
           </div>
           <!-- form-group textarea id=description -->
           <div class="form-group">
             <label for="description">Description:</label>
-            <textarea class="form-control" rows="5" id="description"></textarea>
+            <textarea class="form-control" rows="5" id="description" name="description" required></textarea>
           </div>
           
-          <button type="submit" class="btn btn-default">Submit</button>
+          <button type="button" class="btn btn-primary" onclick="Todo.add_data()" id="add_btn">Submit</button>
+          <button type="button" class="btn btn-info" onclick="Todo.update_specific_data()" style="display:none" id="update_btn">Update</button>
         </form>
         <!-- end form -->
       </div>
@@ -49,10 +54,11 @@
               <th>#</th>
               <th>Title</th>
               <th>Description</th>
-              <th></th>
+              <th>*</th>
               <th>Action</th>
             </tr>
           </thead>
+          <tbody id="todo_list_tbody"></tbody>
         </table>
          <!-- table id=todo_list_tbl -->
       </div>

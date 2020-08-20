@@ -88,20 +88,30 @@ class TodoController extends Controller
      */
     public function update($id, Request $request, Todo $todo)
     {
-        $validatedData = Validator::make($request->all(), [
-            'title' => 'required',
-            'description' => 'required',
-        ]);
         
-        // validation check 
-        if ($validatedData->fails()) 
+        if($request->status == 0)
         {
-            $result = $validatedData->errors();// error message validation
-        }else
-        {
-           
-            $result =  $todo->update_data($id, $request->except(['_token'])); // query insert data
+            $validatedData = Validator::make($request->all(), [
+                'title' => 'required',
+                'description' => 'required',
+            ]);
+            // validation check 
+            if ($validatedData->fails()) 
+            {
+                $result = $validatedData->errors();// error message validation
+            }else
+            {
+                
+                $result =  $todo->update_data($id, $request->except(['_token'])); // query insert data
+        
+            }
+        }else{
+        
+            $result =  $todo->update_data($id, ['status' => $request->status]); // query insert data
         }
+       
+        
+        
 
         return response()->json($result);
     }
@@ -112,8 +122,12 @@ class TodoController extends Controller
      * @param  \App\Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Todo $todo)
+    public function destroy($id, Todo $todo)
     {
-        //
+        $result =  $todo->delete_data($id); // query delete data
+        return response()->json($result);
     }
+
+    
+    
 }

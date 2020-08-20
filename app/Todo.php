@@ -3,11 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Todo extends Model
 {
+    use SoftDeletes;
     protected $fillable = ['title', 'description'];
-
+    // protected $softDelete = true;
 
     public function get_all_data()
     {
@@ -33,5 +35,12 @@ class Todo extends Model
     {
         return Todo::where('id', $id)
                     ->update($data);
+    }
+
+    public function delete_data($id)
+    {
+        // return Todo::withTrashed()->where('id', 1)
+        //                     ->get();
+        return  Todo::find($id)->delete();
     }
 }
