@@ -41,18 +41,26 @@ class TodoController extends Controller
      */
     public function store(Request $request,Todo $todo)
     {
+         /**
+          * validate the request
+          * title :  required
+          * description : required
+         **/
         $validatedData = Validator::make($request->all(), [
             'title' => 'required',
             'description' => 'required',
         ]);
-
-        if ($validatedData->fails()) {
-            $data = $validatedData->errors();
+        
+        // validation check 
+        if ($validatedData->fails()) 
+        {
+            $data = $validatedData->errors();// error message validation
         }else
         {
-            $data =  $todo->insert_data($request->all());
+            $data =  $todo->insert_data($request->all()); // query insert data
         }
-        return response()->json($data);
+        return response()->json($data); 
+        //return result insert
     }
 
     /**
