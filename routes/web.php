@@ -18,5 +18,7 @@ Route::get('/', 'TodoController@index');
 
 Route::post('/add', 'TodoController@store'); // add or insert todo
 
-Route::post('/add', 'TodoController@store'); // add or insert todo
+Route::get('/show/{id}', 'TodoController@show'); // show specific data 
+
+Route::patch('/update/{id}', 'TodoController@update'); // update specific data
 

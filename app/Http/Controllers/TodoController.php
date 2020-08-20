@@ -63,8 +63,8 @@ class TodoController extends Controller
         {
             $result =  $todo->insert_data($request->all()); // query insert data
         }
+
         return response()->json($result); 
-        //return result insert
     }
 
     /**
@@ -73,20 +73,10 @@ class TodoController extends Controller
      * @param  \App\Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function show(Todo $todo)
+    public function show($id, Todo $todo)
     {
-        
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Todo  $todo
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Todo $todo)
-    {
-        //
+        $data = $todo->select_specific_data($id);
+        return response()->json($data);
     }
 
     /**
@@ -96,9 +86,24 @@ class TodoController extends Controller
      * @param  \App\Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Todo $todo)
+    public function update($id, Request $request, Todo $todo)
     {
-        //
+        $validatedData = Validator::make($request->all(), [
+            'title' => 'required',
+            'description' => 'required',
+        ]);
+        
+        // validation check 
+        if ($validatedData->fails()) 
+        {
+            $result = $validatedData->errors();// error message validation
+        }else
+        {
+           
+            $result =  $todo->update_data($id, $request->except(['_token'])); // query insert data
+        }
+
+        return response()->json($result);
     }
 
     /**
