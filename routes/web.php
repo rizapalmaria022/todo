@@ -16,5 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'TodoController@index');
 
-Route::post('/add', 'TodoController@store');
+Route::post('/add', 'TodoController@store'); // add or insert todo
+
+Route::post('/add', 'TodoController@store'); // add or insert todo
 

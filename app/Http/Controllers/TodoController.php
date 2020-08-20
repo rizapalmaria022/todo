@@ -17,10 +17,14 @@ class TodoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Todo $todo)
     {
-    //    return view('todo');
-        // return csrf_token();
+        /**
+         * load all data with null deleted_data
+         * data
+         *  */ 
+        $result = $todo->get_all_data(); 
+        return response()->json($result);
     }
 
     /**
@@ -54,12 +58,12 @@ class TodoController extends Controller
         // validation check 
         if ($validatedData->fails()) 
         {
-            $data = $validatedData->errors();// error message validation
+            $result = $validatedData->errors();// error message validation
         }else
         {
-            $data =  $todo->insert_data($request->all()); // query insert data
+            $result =  $todo->insert_data($request->all()); // query insert data
         }
-        return response()->json($data); 
+        return response()->json($result); 
         //return result insert
     }
 
