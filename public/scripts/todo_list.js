@@ -17,18 +17,29 @@ const Todo = (()=>{
       success: function (response) 
       {
         console.log(response);
+        var style = '';
         $.each(response, function (index) 
         {
+
+          if(this.status > 0)
+          {
+            style="disabled  checked";
+            
+          }else
+          {
+            style = '';
+            check = '';
+          }
           table +=`
            <tr>
             <td>${index + 1}</td>
             <td>${this.title}</td>
             <td>${this.description}</td>
             <td>
-            <input type="checkbox" id="check_todo" onclick="Todo.update_status(${this.id})"></td>
+            <input type="checkbox" class="checked" id="check_todo" ${style} onclick="Todo.update_status(${this.id})"></td>
             <td>
-            <button type="button" class="btn btn-primary" onclick="Todo.show_specific_data(${this.id})">Update</button>
-            <button type="button" class="btn btn-danger">Delete</button>
+            <button type="button" class="btn btn-primary" ${style} onclick="Todo.show_specific_data(${this.id})">Update</button>
+            <button type="button" class="btn btn-danger"  ${style}  onclick="Todo.delete_data(${this.id})">Delete</button>
             </td>
           </tr> `;
         });
@@ -55,9 +66,11 @@ const Todo = (()=>{
       success: function (response) 
       {
          if(response == true)
-         {
-            alert("successfully");
+         { 
+            alert("successfully");// successfully alert
             Todo.load_all();
+            $(".todo_frm input[type=text").val("");
+            $("#description").text("");
          }else
          {
            alert("unsuccessful");
@@ -118,6 +131,7 @@ const Todo = (()=>{
       });
   }
 
+  // btn function onclick update status 1
   todo.update_status = (id) =>
   {
     
@@ -135,16 +149,37 @@ const Todo = (()=>{
         dataType: "json",
         success: function (response) 
         {
-            // if(response > 0)
-            // {
-            //   alert('successfully updated');
-            //   Todo.load_all(); // if success reload data
-            // }else
-            // {
-            //   alert('unsuccessfully updated');
-            // }
+            if(response > 0)
+            {
+              alert('successfully updated');
+              Todo.load_all(); // if success reload data
+            }else
+            {
+              alert('unsuccessfully updated');
+            }
         }
       });
+  }
+
+  // delete function per id
+  todo.delete_data = (id) =>
+  {
+    $.ajax({
+      type: "get",
+      url: BASE_URL+'/delete/'+id,
+      dataType: "json",
+      success: function (response) 
+      { 
+        if(response > 0)
+          {
+            alert('successfully deleted');
+            Todo.load_all(); // if success reload data
+          }else
+          {
+            alert('unsuccessfully deletd');
+          }
+      }
+    });
   }
   return todo;
 })();
